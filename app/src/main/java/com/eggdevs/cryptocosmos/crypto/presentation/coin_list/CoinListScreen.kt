@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.eggdevs.cryptocosmos.crypto.presentation.coin_list.components.CoinListItem
 import com.eggdevs.cryptocosmos.crypto.presentation.coin_list.components.previewCoin
-import com.eggdevs.cryptocosmos.ui.theme.CryptoCosmosTheme
+import com.eggdevs.cryptocosmos.crypto.presentation.theme.CryptoCosmosTheme
 
 @Composable
 fun CoinListScreen(

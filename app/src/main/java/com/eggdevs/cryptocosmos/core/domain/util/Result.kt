@@ -1,4 +1,4 @@
-package com.eggdevs.cryptocosmos.util
+package com.eggdevs.cryptocosmos.core.domain.util
 
 typealias DomainError = Error
 

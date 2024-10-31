@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.eggdevs.cryptocosmos.crypto.presentation.models.DisplayableNumber
-import com.eggdevs.cryptocosmos.ui.theme.CryptoCosmosTheme
-import com.eggdevs.cryptocosmos.ui.theme.greenBackground
+import com.eggdevs.cryptocosmos.crypto.presentation.theme.CryptoCosmosTheme
+import com.eggdevs.cryptocosmos.crypto.presentation.theme.greenBackground
 
 @Composable
 fun PriceChange(

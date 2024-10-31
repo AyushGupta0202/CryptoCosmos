@@ -1,4 +1,4 @@
-package com.eggdevs.cryptocosmos.ui.theme
+package com.eggdevs.cryptocosmos.crypto.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

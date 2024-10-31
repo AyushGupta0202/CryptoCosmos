@@ -3,7 +3,7 @@ package com.eggdevs.cryptocosmos.crypto.presentation.models
 import android.icu.text.NumberFormat
 import androidx.annotation.DrawableRes
 import com.eggdevs.cryptocosmos.crypto.domain.Coin
-import com.eggdevs.cryptocosmos.util.getDrawableIdForCoin
+import com.eggdevs.cryptocosmos.core.presentation.util.getDrawableIdForCoin
 import java.util.Locale
 
 data class CoinUi(

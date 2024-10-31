@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.eggdevs.cryptocosmos.crypto.domain.Coin
 import com.eggdevs.cryptocosmos.crypto.presentation.models.CoinUi
 import com.eggdevs.cryptocosmos.crypto.presentation.models.toCoinUi
-import com.eggdevs.cryptocosmos.ui.theme.CryptoCosmosTheme
+import com.eggdevs.cryptocosmos.crypto.presentation.theme.CryptoCosmosTheme
 
 @Composable
 fun CoinListItem(

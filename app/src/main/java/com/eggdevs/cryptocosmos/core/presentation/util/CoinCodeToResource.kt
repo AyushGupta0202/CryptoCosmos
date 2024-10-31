@@ -1,4 +1,4 @@
-package com.eggdevs.cryptocosmos.util
+package com.eggdevs.cryptocosmos.core.presentation.util
 
 import com.eggdevs.cryptocosmos.R
 

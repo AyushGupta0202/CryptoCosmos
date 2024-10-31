@@ -1,4 +1,4 @@
-package com.eggdevs.cryptocosmos.ui.theme
+package com.eggdevs.cryptocosmos.crypto.presentation.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
