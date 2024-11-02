@@ -35,6 +35,10 @@ fun Coin.toCoinUi(): CoinUi {
     )
 }
 
+fun List<Coin>.toCoinUis(): List<CoinUi> {
+    return map { it.toCoinUi() }
+}
+
 fun Double.toDisplayableNumber(): DisplayableNumber {
     val formatter = NumberFormat.getNumberInstance(Locale.getDefault()).apply {
         minimumFractionDigits = 2
