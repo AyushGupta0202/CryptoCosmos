@@ -4,12 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eggdevs.cryptocosmos.core.domain.util.onError
 import com.eggdevs.cryptocosmos.core.domain.util.onSuccess
-import com.eggdevs.cryptocosmos.crypto.domain.Coin
 import com.eggdevs.cryptocosmos.crypto.domain.RemoteCoinDataSource
 import com.eggdevs.cryptocosmos.crypto.presentation.models.toCoinUis
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,6 +29,9 @@ class CoinListViewModel(
             SharingStarted.WhileSubscribed(5000L),
             CoinListState()
         )
+
+    private val _coinListEvents = Channel<CoinListEvent>()
+    val coinListEvents = _coinListEvents.receiveAsFlow()
 
     fun onAction(action: CoinListAction) {
         when(action) {
@@ -63,6 +67,7 @@ class CoinListViewModel(
                             isLoading = false
                         )
                     }
+                    _coinListEvents.send(CoinListEvent.Error(error))
                 }
         }
     }
