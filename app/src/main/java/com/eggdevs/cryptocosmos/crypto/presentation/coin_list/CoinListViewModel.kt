@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.eggdevs.cryptocosmos.core.domain.util.onError
 import com.eggdevs.cryptocosmos.core.domain.util.onSuccess
 import com.eggdevs.cryptocosmos.crypto.domain.RemoteCoinDataSource
+import com.eggdevs.cryptocosmos.crypto.presentation.models.CoinUi
 import com.eggdevs.cryptocosmos.crypto.presentation.models.toCoinUis
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
 class CoinListViewModel(
     private val remoteCoinDataSource: RemoteCoinDataSource
@@ -36,11 +38,7 @@ class CoinListViewModel(
     fun onAction(action: CoinListAction) {
         when(action) {
             is CoinListAction.OnCoinClick -> {
-                _state.update {
-                    it.copy(
-                        selectedCoin = action.coinUi
-                    )
-                }
+                selectCoin(action.coinUi)
             }
             CoinListAction.OnRefresh -> {
                 loadCoins()
@@ -72,6 +70,28 @@ class CoinListViewModel(
                         )
                     }
                     _coinListEvents.send(CoinListEvent.Error(error))
+                }
+        }
+    }
+
+    private fun selectCoin(coinUi: CoinUi) {
+        _state.update {
+            it.copy(
+                selectedCoin = coinUi
+            )
+        }
+        viewModelScope.launch {
+            remoteCoinDataSource
+                .getCoinHistory(
+                    coinId = coinUi.id,
+                    start = ZonedDateTime.now().minusDays(5),
+                    end = ZonedDateTime.now()
+                )
+                .onSuccess { history ->
+                    println(history)
+                }
+                .onError {
+                    _coinListEvents.send(CoinListEvent.Error(it))
                 }
         }
     }
