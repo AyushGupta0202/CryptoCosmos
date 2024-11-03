@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.eggdevs.cryptocosmos.core.presentation.util.ObserveAsEvents
 import com.eggdevs.cryptocosmos.core.presentation.util.toString
+import com.eggdevs.cryptocosmos.crypto.presentation.coin_detail.CoinDetailScreen
 import com.eggdevs.cryptocosmos.crypto.presentation.coin_list.CoinListEvent
 import com.eggdevs.cryptocosmos.crypto.presentation.coin_list.CoinListScreen
 import com.eggdevs.cryptocosmos.crypto.presentation.coin_list.CoinListViewModel
@@ -41,10 +42,21 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
-                    CoinListScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        state = state
-                    )
+                    when {
+                        state.selectedCoin != null -> {
+                            CoinDetailScreen(
+                                state = state,
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
+                        else -> {
+                            CoinListScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                state = state,
+                                onAction = coinListViewModel::onAction
+                            )
+                        }
+                    }
                 }
             }
         }

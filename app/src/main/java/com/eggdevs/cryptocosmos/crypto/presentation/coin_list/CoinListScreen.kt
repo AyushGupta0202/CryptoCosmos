@@ -22,7 +22,8 @@ import com.eggdevs.cryptocosmos.crypto.presentation.theme.CryptoCosmosTheme
 @Composable
 fun CoinListScreen(
     modifier: Modifier = Modifier,
-    state: CoinListState = CoinListState()
+    state: CoinListState = CoinListState(),
+    onAction: (CoinListAction) -> Unit = {}
 ) {
     if (state.isLoading) {
         Box(
@@ -42,7 +43,10 @@ fun CoinListScreen(
                 CoinListItem(
                     coinUi = coinUi,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    onCoinClick = {
+                        onAction(CoinListAction.OnCoinClick(coinUi))
+                    }
                 )
                 HorizontalDivider()
             }
