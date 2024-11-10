@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.eggdevs.cryptocosmos.core.domain.util.onError
 import com.eggdevs.cryptocosmos.core.domain.util.onSuccess
 import com.eggdevs.cryptocosmos.crypto.domain.RemoteCoinDataSource
+import com.eggdevs.cryptocosmos.crypto.presentation.coin_detail.DataPoint
 import com.eggdevs.cryptocosmos.crypto.presentation.models.CoinUi
 import com.eggdevs.cryptocosmos.crypto.presentation.models.toCoinUis
 import kotlinx.coroutines.channels.Channel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class CoinListViewModel(
     private val remoteCoinDataSource: RemoteCoinDataSource
@@ -88,7 +90,25 @@ class CoinListViewModel(
                     end = ZonedDateTime.now()
                 )
                 .onSuccess { history ->
-                    println(history)
+                    val dataPoints = history
+                        .sortedBy { it.dateTime }
+                        .map {
+                            DataPoint(
+                                x = it.dateTime.hour.toFloat(),
+                                y = it.priceUsd.toFloat(),
+                                xLabel = DateTimeFormatter
+                                    .ofPattern("ha\nM/d")
+                                    .format(it.dateTime)
+                            )
+                        }
+
+                    _state.update {
+                        it.copy(
+                            selectedCoin = it.selectedCoin?.copy(
+                                coinPriceHistory = dataPoints
+                            )
+                        )
+                    }
                 }
                 .onError {
                     _coinListEvents.send(CoinListEvent.Error(it))
