@@ -16,12 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.draw
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -124,7 +122,9 @@ fun LineChart(
         val maxXLabelWidth = xLabelTextLayoutResults.maxOfOrNull { it.size.width } ?: 0
         val maxXLabelHeight = xLabelTextLayoutResults.maxOfOrNull { it.size.height } ?: 0
         val maxXLabelLineCount = xLabelTextLayoutResults.maxOfOrNull { it.lineCount } ?: 0 // shows number of lines of text in an x label
-        val xLabelLineHeight = maxXLabelHeight / maxXLabelLineCount // height of each line of text in an x label
+        val xLabelLineHeight = if (maxXLabelLineCount > 0) {
+            maxXLabelHeight / maxXLabelLineCount // height of each line of text in an x label
+        } else 0
 
         val viewPortHeightPx = size.height -
                 (maxXLabelHeight // x-axis label
@@ -135,10 +135,13 @@ fun LineChart(
         // Y-LABEL calculation
         val yLabelLineHeight = xLabelLineHeight // we are using same style for x and y labels
         val labelViewPortHeightPx = viewPortHeightPx + yLabelLineHeight
-        val yLabelCountExcludingLastLabel =
+        val yLabelCountExcludingLastLabel = if (yLabelLineHeight > 0) {
             ((labelViewPortHeightPx / (yLabelLineHeight + minLabelSpacingYPx))).toInt()
+        } else 0
 
-        val valueIncrement = (maxYValue - minYValue) / yLabelCountExcludingLastLabel
+        val valueIncrement = if (yLabelCountExcludingLastLabel > 0) {
+            (maxYValue - minYValue) / yLabelCountExcludingLastLabel
+        } else 0f
 
         val yLabels = (0..yLabelCountExcludingLastLabel).map {
             ValueLabel(
