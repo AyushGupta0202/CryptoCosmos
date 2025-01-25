@@ -11,6 +11,12 @@ CryptoCosmos is a modern Android application that provides real-time cryptocurre
 - Edge-to-edge design
 - Responsive and smooth animations
 
+## Screenshots 📱
+
+| Home Screen | Detail Screen |
+|------------|---------------|
+| ![Home Screen](app/screenshots/crypto_cosmos_home.png) | ![Detail Screen](app/screenshots/crypto_cosmos_detail.png) |
+
 ## Tech Stack 🛠️
 
 ### Core
