@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -23,6 +25,8 @@ android {
         }
     }
 
+    val apiKey = gradleLocalProperties(rootDir, providers)["CC_API_KEY"]
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -31,10 +35,12 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v2/\"")
+            buildConfigField("String", "BASE_URL", "\"https://rest.coincap.io/v3/\"")
+            buildConfigField("String", "CC_API_KEY", "\"$apiKey\"")
         }
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v2/\"")
+            buildConfigField("String", "BASE_URL", "\"https://rest.coincap.io/v3/\"")
+            buildConfigField("String", "CC_API_KEY", "\"$apiKey\"")
         }
     }
     compileOptions {

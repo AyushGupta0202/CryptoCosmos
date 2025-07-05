@@ -1,5 +1,6 @@
 package com.eggdevs.cryptocosmos.crypto.data.networking
 
+import com.eggdevs.cryptocosmos.BuildConfig
 import com.eggdevs.cryptocosmos.core.data.networking.constructUrl
 import com.eggdevs.cryptocosmos.core.data.networking.safeCall
 import com.eggdevs.cryptocosmos.core.domain.util.NetworkError
@@ -26,7 +27,9 @@ class KtorRemoteCoinDataSource(
         return safeCall<CoinsResponseDto> {
             httpClient.get(
                 urlString = constructUrl("/assets"),
-            )
+            ) {
+                parameter("apiKey", BuildConfig.CC_API_KEY)
+            }
         }.map { response ->
             response.data.toCoins()
         }
@@ -49,6 +52,7 @@ class KtorRemoteCoinDataSource(
             httpClient.get(
                 urlString = constructUrl("/assets/$coinId/history")
             ) {
+                parameter("apiKey", BuildConfig.CC_API_KEY)
                 parameter("interval", "h6")
                 parameter("start", startMillis)
                 parameter("end", endMillis)
