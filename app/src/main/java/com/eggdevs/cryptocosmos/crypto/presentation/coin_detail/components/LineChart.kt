@@ -164,6 +164,8 @@ fun LineChart(
         val viewPortLeftX = 2f * horizontalPaddingPx + maxYLabelWidth
 
         xLabelWidth = maxXLabelWidth + xAxisLabelSpacingPx
+
+        // X-Label texts
         xLabelTextLayoutResults.forEachIndexed { index, textLayoutResult ->
             val x = viewPortLeftX + xAxisLabelSpacingPx / 2f +
                     xLabelWidth * index
@@ -234,6 +236,7 @@ fun LineChart(
         val remainingHeightForYLabels = labelViewPortHeightPx - heightRequiredForYLabels
         val spaceBetweenYLabels = remainingHeightForYLabels / yLabelCountExcludingLastLabel
 
+        // Y-Label texts
         yLabelTextLayoutResults.forEachIndexed { index, textLayoutResult ->
             val x = horizontalPaddingPx + maxYLabelWidth - textLayoutResult.size.width.toFloat()
             val y = viewPortTopY +
@@ -402,12 +405,12 @@ private fun LineChartPreview() {
         LineChart(
             dataPoints = dataPoints,
             style = style,
-            visibleDataPointsIndices = 0..19,
+            visibleDataPointsIndices = 5..16,
             unit = "$",
             modifier = Modifier
                 .width(700.dp)
                 .height(300.dp)
-                .background(Color.White),
+                .background(Color.Green),
             selectedDataPoint = dataPoints[1]
         )
     }
